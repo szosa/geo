@@ -15,3 +15,4 @@ use Illuminate\Http\Request;
 
 
 Route::post('/add-location', 'LocationController@addLocations');
+Route::post('/get-closest-point', 'LocationController@getClosestPoint');
