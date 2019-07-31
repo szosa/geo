@@ -14,6 +14,6 @@ use Illuminate\Http\Request;
 */
 
 
-Route::post('/add-location', 'LocationController@addLocations');
-Route::post('/get-closest-point', 'LocationController@getClosestPoint');
-Route::post('/get-point-in-range', 'LocationController@getPointInRange');
+Route::post('/add-location', 'LocationController@addLocations')->name('add.location');
+Route::post('/get-closest-point', 'LocationController@getClosestPoint')->name('get.closest.point');
+Route::post('/get-point-in-range', 'LocationController@getPointInRange')->name('get.point.in.range');

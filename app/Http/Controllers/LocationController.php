@@ -35,7 +35,7 @@ class LocationController extends Controller
 
         return response()->json([
             'message' => sprintf('Added: %s rows', count($data))
-        ]);
+        ],201);
     }
 
     public function getClosestPoint(Request $request)
@@ -68,6 +68,12 @@ class LocationController extends Controller
             ->orderBy('distance')
             ->first();
 
+        if(is_null($return))
+        {
+            return response()->json([
+                'message' => 'There is no locations in database'
+            ]);
+        }
         return response()->json([
             'message' => $return->name
         ]);
@@ -95,6 +101,7 @@ class LocationController extends Controller
         $lat = $data['lat'];
         $lng = $data['lng'];
         $radius = $data['threshold'];
+
         DB::insert(DB::raw('
             create temporary table tmp 
                 select 
@@ -107,6 +114,7 @@ class LocationController extends Controller
                 from `locations` 
                 order by `distance` asc;
         '));
+
         $locations = DB::table('tmp')
             ->select(['tmp.name','distance'])
             ->where('tmp.distance','<=', $radius)
